@@ -7,6 +7,7 @@ const SCALE = 10;
 export class Renderer {
     private canvas: HTMLCanvasElement;
     private ctx: CanvasRenderingContext2D | null;
+    private imageData: number[];
 
     /**
      * Creates a new Renderer instance.
@@ -19,6 +20,7 @@ export class Renderer {
         this.canvas.height = 32 * SCALE;
         console.log(this.canvas);
         this.ctx = canvas.getContext('2d');
+        this.imageData = [0].fill(0, 0, 64 * 32);
     }
 
     /**
@@ -26,8 +28,14 @@ export class Renderer {
      * @param x - The x-coordinate of the pixel.
      * @param y - The y-coordinate of the pixel.
      */
-    public render(x: number, y: number): void {
+    public render(x: number, y: number, value: number): boolean {
         this.ctx?.fillRect(x * SCALE, y * SCALE, SCALE, SCALE);
+        if(this.imageData[x + y * 64] === value) {
+            return false;
+        } else {
+            this.imageData[x + y * 64] = value;
+            return true;
+        }
     }
 
     /**
