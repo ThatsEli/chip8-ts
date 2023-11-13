@@ -20,6 +20,42 @@ export class Chip8 {
         this.ST = 0;
     }
 
+    /**
+     * Loads the given ROM data into the Chip8 memory.
+     * @param romData The ROM data to load.
+     */
+    public load(romData: number[]): void {
+        romData.forEach((data, index) => {
+            this.memory[index] = data;
+        });
+    }
+
+    /**
+     * Executes a single step (fetch, decode and execute instruction)
+     */
+    public step(): void {
+        const isntr = this.memory[this.PC];
+        const parsedInstruction = this.parseInstruction(isntr);
+        this.executeInstruction(parsedInstruction);
+    }
+
+    /**
+     * Executes the given parsed instruction.
+     * @param instruction The parsed instruction to execute.
+     */
+    private executeInstruction(instruction: ParsedInstruction): void {
+        switch (instruction.instruction.name) {
+            case 'add_vx_vy':
+                this.registers[instruction.arguments[0]] += this.registers[instruction.arguments[1]];
+                this.PC += 2;
+                break;
+            case 'sub_vx_vy':
+                this.registers[instruction.arguments[0]] -= this.registers[instruction.arguments[1]];
+                this.PC += 2;
+                break;
+        }
+    }
+
     
     /**
      * Parses a raw instruction and returns a ParsedInstruction object.
