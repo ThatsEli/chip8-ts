@@ -1,0 +1,1 @@
+bun build --minify --splitting --outdir=dist --watch ./src/main.ts
