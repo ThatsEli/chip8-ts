@@ -1,14 +1,24 @@
 export class Instruction {
-    private name: string;
-    private opcode: number;
-    private mask: number;
-    private arguments: Argument[];
+    public name: string;
+    public opcode: number;
+    public mask: number;
+    public arguments: Argument[];
 
     constructor(name: string, opcode: number, mask: number, instArguments: Argument[]) {
         this.name = name;
         this.opcode = opcode;
         this.mask = mask;
         this.arguments = instArguments;
+    }
+}
+
+export class ParsedInstruction {
+    public instruction: Instruction;
+    public arguments: number[];
+
+    constructor(instruction: Instruction, parsedArguments: number[]) {
+        this.instruction = instruction;
+        this.arguments = parsedArguments;
     }
 }
 

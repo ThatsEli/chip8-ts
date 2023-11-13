@@ -1,3 +1,5 @@
+import { Instruction, ParsedInstruction, instructions } from "./instruction";
+
 export class Chip8 {
     private memory: Uint8Array; // memory (4k)
     private PC: number; // program counter
@@ -18,7 +20,26 @@ export class Chip8 {
         this.ST = 0;
     }
 
-    public test(): string {
-        return 'test';
+    
+    /**
+     * Parses a raw instruction and returns a ParsedInstruction object.
+     * @param rawInstruction The raw instruction to parse.
+     * @returns A ParsedInstruction object representing the parsed instruction.
+     * @throws An error if the instruction is unknown.
+     */
+    private parseInstruction(rawInstruction: number): ParsedInstruction {
+        const instruction = instructions.find((instruction) => {
+            // Mask the raw instruction with the instruction's mask and compare it to the instruction's opcode.
+            if ((rawInstruction & instruction.mask) === instruction.opcode) {
+                return true;
+            }
+        });
+        if(!instruction) {
+            throw new Error('[E] Unknown instruction ' + rawInstruction.toString(16));
+        }
+        const instructionArguments = instruction.arguments.map((argument) => {
+            return (rawInstruction & argument.mask) >> argument.shiftAmount;
+        });
+        return new ParsedInstruction(instruction, instructionArguments);
     }
 }
