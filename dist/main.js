@@ -1,1 +1,0 @@
-class l{memory;PC;registers;stack;stackPointer;DT;ST;constructor(){this.memory=new Uint8Array(4096),this.PC=512,this.registers=new Uint8Array(16),this.stack=new Uint16Array(16),this.stackPointer=-1,this.DT=0,this.ST=0}test(){return"test"}}var n=new l;console.log("Hello, World!");
