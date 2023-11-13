@@ -12,3 +12,6 @@ Later on I plan to move on to a GameBoy emulator.
 1. Clone the repo
 2. Run `bash bundle.sh`
 3. Open `index.html` in your browser
+
+Sources:
+- https://www.wikiwand.com/en/CHIP-8#Opcode_table
