@@ -1,9 +1,23 @@
+/**
+ * Represents a CHIP-8 instruction.
+ */
 export class Instruction {
+    /** The name of the instruction. */
     public name: string;
+    /** The opcode of the instruction (after masking). */
     public opcode: number;
+    /** The mask used to remove the arguments from the opcode. */
     public mask: number;
+    /** The arguments of the instruction. */
     public arguments: Argument[];
 
+    /**
+     * Creates a new instance of the Instruction class.
+     * @param name The name of the instruction.
+     * @param opcode The opcode of the instruction.
+     * @param mask The mask used to remove the arguments from the opcode.
+     * @param instArguments The arguments of the instruction.
+     */
     constructor(name: string, opcode: number, mask: number, instArguments: Argument[]) {
         this.name = name;
         this.opcode = opcode;
@@ -13,20 +27,40 @@ export class Instruction {
 }
 
 export class ParsedInstruction {
+    /** The instruction object. */
     public instruction: Instruction;
+
+    /** The arguments parsed from the instruction. */
     public arguments: number[];
 
+    /**
+     * Creates a new instance of the ParsedInstruction class.
+     * @param instruction The instruction object.
+     * @param parsedArguments The arguments parsed from the instruction.
+     */
     constructor(instruction: Instruction, parsedArguments: number[]) {
         this.instruction = instruction;
         this.arguments = parsedArguments;
     }
 }
 
+/**
+ * Represents an argument for a CHIP-8 instruction.
+ */
 class Argument {
+    /** The mask used to remove the argument from the opcode. */
     public mask: number;
+    /** The amount of bits to shift the argument to the right after applying the mask */
     public shiftAmount: number;
+    /** The type of the argument. */
     public type: ArgumentType;
 
+    /**
+     * Creates a new Argument object.
+     * @param mask - The mask used to remove the argument from the opcode.
+     * @param shiftAmount - The amount of bits to shift the argument to the right after applying the mask.
+     * @param type - The type of argument.
+     */
     constructor(mask: number, shiftAmount: number, type: ArgumentType) {
         this.mask = mask;
         this.shiftAmount = shiftAmount;
@@ -34,12 +68,16 @@ class Argument {
     }
 }
 
+/**
+ * Represents the type of argument used in a CHIP-8 instruction.
+ */
 enum ArgumentType {
     Register,
     Address,
     Byte,
     Nibble
 }
+
 
 export const instructions = [
     new Instruction('display_clear', 0x00E0, 0xFFFF, []),
